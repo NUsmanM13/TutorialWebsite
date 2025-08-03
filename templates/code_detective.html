@@ -1,0 +1,34 @@
+<!-- templates/code_detective.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}O'yin: Kod-Detektiv - Galactic Tutorials{% endblock title %}
+
+{% block main_class %}game-page{% endblock %}
+
+{% block content %}
+<div class="game-container glass-container" style="max-width: 800px;">
+    <h2 class="section-title" style="margin-bottom: 1rem;"><span>//</span> Kod-Detektiv</h2>
+    <p id="instructions" class="game-instructions">Quyidagi kod blokidagi xatolikni toping va xato bor qatorni bosing!</p>
+    
+    <div id="code-challenge-container">
+        <div class="code-header">
+            <span id="language-tag">JAVASCRIPT</span>
+        </div>
+        <pre id="code-display" class="code-editor" style="text-align: left; min-height: 200px;"></pre>
+    </div>
+
+    <div id="result-message" style="margin-top: 1.5rem; font-size: 1.2rem; font-weight: bold; min-height: 2rem;"></div>
+    
+    <div id="explanation-box" class="glass-container hidden" style="margin-top: 1rem; text-align: left; background-color: rgba(0,0,0,0.2);">
+        <h4>Tushuntirish:</h4>
+        <p id="explanation-text"></p>
+    </div>
+
+    <button id="next-challenge-btn" class="btn hidden" style="margin-top: 1.5rem;">Keyingi Topshiriq</button>
+</div>
+{% endblock content %}
+
+{% block extra_js %}
+<script src="{% static 'js/code_detective.js' %}"></script>
+{% endblock extra_js %}

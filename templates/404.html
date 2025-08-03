@@ -1,0 +1,22 @@
+<!-- templates/404.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}404 - Sahifa Topilmadi{% endblock title %}
+
+{% block content %}
+<main style="padding: 4rem 2rem; text-align: center; display: flex; align-items: center; justify-content: center; min-height: 80vh;">
+    <div class="glass-container" style="max-width: 700px;">
+        <h1 style="font-family: var(--header-font); font-size: 6rem; color: var(--accent-color); margin: 0; text-shadow: 0 0 25px var(--glow-color);">
+            404
+        </h1>
+        <h2 style="font-family: var(--header-font); font-size: 2.5rem; margin-bottom: 1.5rem;">
+            Koinotda Adashib Qoldingizmi?
+        </h2>
+        <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 2.5rem;">
+            Biz bu koordinatalarda hech qanday sayyora topa olmadik. Ehtimol, siz qidirayotgan sahifa boshqa galaktikaga ko'chirilgan yoki nomi o'zgargan bo'lishi mumkin.
+        </p>
+        <a href="{% url 'main:home' %}" class="btn">Bosh Orbitaga Qaytish</a>
+    </div>
+</main>
+{% endblock content %}

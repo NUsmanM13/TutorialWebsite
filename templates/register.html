@@ -1,0 +1,26 @@
+<!-- templates/register.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Ro'yxatdan o'tish - Galactic Tutorials{% endblock title %}
+{% block body_class %}login-page{% endblock body_class %}
+
+{% block content %}
+<div class="login-container glass-container" style="max-width: 550px;">
+    <h2>Hisob Yaratish</h2>
+    <form method="post" action="{% url 'main:register' %}">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <small style="color: #ff5555;">{{ field.errors|striptags }}</small>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn" style="width: 100%;">Ro'yxatdan o'tish</button>
+    </form>
+    <p class="toggle-form">Hisobingiz bormi? <a href="{% url 'main:login' %}">Kirish</a></p>
+</div>
+{% endblock content %}

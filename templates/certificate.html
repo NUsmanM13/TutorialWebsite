@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sertifikat: {{ certificate.enrollment.course.title }}{% endblock title %}
+
+{% block main_class %}certificate-page{% endblock main_class %}
+
+{% block content %}
+<h1 class="section-title"><span>//</span> Mening Sertifikatim</h1>
+<div class="certificate-container">
+    <!-- Bu blokning ichi to'liq veb-sahifa uchun mo'ljallangan -->
+    <!-- ... (avvalgi javobdagi kabi to'liq kod) ... -->
+    <div class="certificate-border">
+        <div class="certificate-header">
+            <div class="logo" style="font-size: 1.8rem;">Galactic<span>Tutor</span></div>
+            <h1>Muvaffaqiyat Sertifikati</h1>
+        </div>
+        <div class="certificate-body">
+            <p class="award-text">Ushbu sertifikat bilan taqdirlanadi</p>
+            <h2 class="user-name">{{ certificate.enrollment.user.get_full_name|default:certificate.enrollment.user.username }}</h2>
+            <p class="course-text">
+                <b>{{ certificate.enrollment.course.title }}</b> kursini muvaffaqiyatli yakunlab,
+                koinot miqyosidagi bilimlarini namoyon etgani uchun.
+            </p>
+        </div>
+        <div class="certificate-footer">
+            <div class="signature">
+                <span>Loyiha Asoschisi</span>
+            </div>
+            <div class="date">
+                <span>{{ certificate.issued_at|date:"d.m.Y" }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+<button class="btn" onclick="window.print()">Chop etish</button>
+{% endblock content %}

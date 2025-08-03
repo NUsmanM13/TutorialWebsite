@@ -1,0 +1,275 @@
+/* ========================================
+   GALACTIC TUTORIALS - YAKUNIY USLUBLAR (XATOLIKLAR TUZATILGAN)
+   ======================================== */
+
+/* O'ZGARUVCHILAR VA GLOBAL SOZLAMALAR */
+:root {
+    --primary-color: #0a0918;
+    --secondary-color: #13122e;
+    --glass-bg: rgba(19, 18, 46, 0.5);
+    --accent-color: #00f2ff;
+    --glow-color: rgba(0, 242, 255, 0.7);
+    --primary-gradient: linear-gradient(115deg, #7d26c1, #00f2ff);
+    --text-color: #e0e1ff;
+    --text-muted: #8a88b5;
+    --header-font: 'Orbitron', sans-serif;
+    --body-font: 'Rajdhani', sans-serif;
+    --border-radius: 15px;
+    --transition-speed: 0.4s;
+    --transition-timing: cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    font-family: var(--body-font);
+    overflow-x: hidden;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%2313122e' fill-opacity='0.4'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* --- YUKLOVCHI VA UMUMIY ELEMENTLAR (O'zgarishsiz) --- */
+.loader-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--primary-color); display: flex; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.7s, visibility 0.7s; }
+.loader-wrapper.hidden { opacity: 0; visibility: hidden; }
+.loader { width: 120px; height: 120px; border: 5px solid var(--secondary-color); border-top-color: var(--accent-color); border-radius: 50%; animation: spin 1.5s linear infinite; }
+@keyframes spin { 100% { transform: rotate(360deg); } }
+.section-title { font-family: var(--header-font); font-size: 2.8rem; text-align: center; margin-bottom: 4rem; position: relative; padding-bottom: 1rem; color: #fff; }
+.section-title span { color: var(--accent-color); }
+.section-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 120px; height: 4px; background: var(--primary-gradient); border-radius: 2px; box-shadow: 0 0 15px var(--glow-color); }
+.glass-container { background: var(--glass-bg); backdrop-filter: blur(10px); border: 1px solid rgba(0, 242, 255, 0.2); border-radius: var(--border-radius); padding: 2rem; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); }
+.hidden { display: none !important; }
+
+/* --- TUGMA (YANGILANGAN HOVER EFFEKTI) --- */
+.btn {
+    background: transparent;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: var(--header-font);
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: color var(--transition-speed) var(--transition-timing), 
+                transform var(--transition-speed) var(--transition-timing), 
+                letter-spacing var(--transition-speed) var(--transition-timing),
+                box-shadow var(--transition-speed) var(--transition-timing);
+}
+.btn:hover {
+    color: var(--primary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px var(--glow-color);
+    letter-spacing: 1px;
+}
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--accent-color);
+    z-index: -1;
+    transition: left var(--transition-speed) var(--transition-timing);
+}
+.btn:hover::before {
+    left: 0;
+}
+
+
+/* --- NAVIGATSIYA (O'zgarishsiz) --- */
+.main-nav { display: flex; justify-content: space-between; align-items: center; width: 90%; max-width: 1300px; margin: 0 auto; padding: 2rem 0; z-index: 10; position: relative; }
+.logo { font-family: var(--header-font); font-size: 2.2rem; color: #fff; text-decoration: none; text-shadow: 0 0 10px var(--accent-color); transition: transform var(--transition-speed); }
+.logo:hover { transform: scale(1.05); }
+.logo span { color: var(--accent-color); }
+.main-nav ul { display: flex; list-style: none; align-items: center; }
+.main-nav ul li a { color: var(--text-color); text-decoration: none; font-size: 1.1rem; margin: 0 1.5rem; padding-bottom: 5px; position: relative; transition: color var(--transition-speed); white-space: nowrap; }
+.main-nav ul li a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--primary-gradient); transition: width var(--transition-speed) ease-out; }
+.main-nav ul li a:hover, .main-nav ul li a.active { color: #fff; }
+.main-nav ul li a:hover::after, .main-nav ul li a.active::after { width: 100%; }
+.nav-btn { margin-left: 1.5rem; }
+
+
+/* --- KARTALAR (TO'LIQ YANGILANGAN HOVER EFFEKTI) --- */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+.card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(0, 242, 255, 0.1);
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    transition: transform var(--transition-speed) var(--transition-timing),
+                box-shadow var(--transition-speed) var(--transition-timing);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+.card > * { z-index: 3; }
+
+/* Sichqonchani kuzatuvchi nur effekti */
+.card::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: var(--y, 0);
+    left: var(--x, 0);
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle at center, var(--accent-color) 0%, transparent 50%);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+    transition: opacity var(--transition-speed) var(--transition-timing),
+                transform var(--transition-speed) var(--transition-timing);
+}
+.card:hover::before {
+    opacity: 0.2;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Aylanuvchi ramka effekti */
+.card::after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(115deg, transparent 40%, var(--gradient-start), var(--gradient-end), transparent 60%);
+    background-size: 200% 200%;
+    border-radius: var(--border-radius);
+    opacity: 0;
+    transition: opacity var(--transition-speed) var(--transition-timing);
+    animation: rotate-border 4s linear infinite;
+}
+.card:hover::after {
+    opacity: 1;
+}
+
+@keyframes rotate-border {
+    from { background-position: 0% 0%; }
+    to { background-position: -200% -200%; }
+}
+
+.card .icon-wrapper { width: 80px; height: 80px; margin: 0 auto 1.5rem; background: var(--primary-gradient); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 40px; color: var(--primary-color); transition: transform 0.4s, box-shadow 0.4s; }
+.card:hover .icon-wrapper { transform: rotate(360deg) scale(1.1); box-shadow: 0 0 25px var(--accent-color); }
+.card h3 { font-family: var(--header-font); font-size: 1.8rem; margin-bottom: 1rem; color: #fff; }
+.card p { font-size: 1rem; line-height: 1.6; margin-bottom: 2rem; color: var(--text-muted); flex-grow: 1; }
+.card .btn { margin-top: auto; }
+
+
+/* QOLGAN BARCHA USLUBLAR (O'zgarishsiz) */
+.home-header { height: 100vh; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; }
+.star-field { position: absolute; top: 0; left: 0; width: 100%; height: 100%; --star-color: var(--accent-color); --star-size: 3px; --star-speed-1: 60s; --star-speed-2: 120s; --star-speed-3: 180s; }
+.star-field .layer { position: absolute; width: 100%; height: 100%; background-repeat: repeat; background-position: center; }
+.star-field .layer:nth-child(1) { background-image: radial-gradient(1px 1px at 25px 25px, var(--star-color) 100%, transparent); background-size: 50px 50px; animation: move-1 var(--star-speed-1) linear infinite; }
+.star-field .layer:nth-child(2) { background-image: radial-gradient(1.5px 1.5px at 50px 50px, var(--star-color) 100%, transparent); background-size: 100px 100px; animation: move-2 var(--star-speed-2) linear infinite; }
+.star-field .layer:nth-child(3) { background-image: radial-gradient(2px 2px at 75px 75px, var(--star-color) 100%, transparent); background-size: 150px 150px; animation: move-3 var(--star-speed-3) linear infinite; }
+@keyframes move-1 { from { transform: translateY(0); } to { transform: translateY(-1000px); } }
+@keyframes move-2 { from { transform: translateY(0); } to { transform: translateY(-2000px); } }
+@keyframes move-3 { from { transform: translateY(0); } to { transform: translateY(-3000px); } }
+.header-content { text-align: center; margin: auto; z-index: 10; padding: 0 2rem; }
+.header-content h1 { font-family: var(--header-font); font-size: clamp(2.5rem, 8vw, 5rem); text-transform: uppercase; background: linear-gradient(90deg, #fff, var(--accent-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: glow 1.5s ease-in-out infinite alternate; }
+@keyframes glow { from { text-shadow: 0 0 10px #fff, 0 0 20px var(--glow-color); } to { text-shadow: 0 0 20px #fff, 0 0 30px var(--glow-color); } }
+.header-content p { font-size: clamp(1.1rem, 3vw, 1.5rem); max-width: 650px; margin: 1.5rem auto 2.5rem; }
+.login-page { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 2rem; }
+.login-container { max-width: 450px; width: 100%; text-align: center; }
+.login-container h2 { font-family: var(--header-font); font-size: 2.5rem; margin-bottom: 2rem; }
+.form-group { margin-bottom: 1.5rem; text-align: left; }
+.form-group label { display: block; margin-bottom: 0.5rem; color: var(--text-muted); font-weight: 600; }
+.form-group input { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--secondary-color); padding: 0.8rem 1rem; border-radius: 8px; color: var(--text-color); font-size: 1rem; transition: border-color 0.3s, box-shadow 0.3s; }
+.form-group input:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 15px rgba(0, 242, 255, 0.3); }
+.toggle-form { margin-top: 1.5rem; color: var(--text-muted); }
+.toggle-form a { color: var(--accent-color); text-decoration: none; font-weight: 600; }
+.progress-bar-container { width: 100%; height: 25px; background: var(--primary-color); border-radius: 25px; border: 1px solid var(--secondary-color); overflow: hidden; margin-top: 0.5rem; }
+.progress-bar { height: 100%; background: var(--primary-gradient); display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--primary-color); font-size: 0.9rem; border-radius: 25px; animation: progress-animation 2s ease-out; }
+@keyframes progress-animation { from { width: 0; } }
+.achievements-container { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+.achievement-badge { width: 100px; height: 100px; background: var(--glass-bg); border: 1px solid var(--accent-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 50px; color: var(--accent-color); box-shadow: 0 0 15px var(--glow-color); cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
+.achievement-badge:hover { transform: scale(1.1); box-shadow: 0 0 30px var(--glow-color); }
+.achievement-badge.locked { color: var(--text-muted); border-color: var(--text-muted); box-shadow: none; filter: grayscale(1); cursor: not-allowed; }
+.course-page-layout { display: flex; gap: 2rem; max-width: 1400px; margin: 2rem auto; padding: 0 2rem; align-items: flex-start; }
+.course-sidebar { width: 350px; flex-shrink: 0; position: sticky; top: 2rem; }
+.course-sidebar h3 { font-family: var(--header-font); margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0, 242, 255, 0.2); }
+.course-modules { list-style: none; }
+.module-item { margin-bottom: 1rem; }
+.module-header { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: rgba(0,0,0,0.2); border-radius: 8px; cursor: pointer; transition: background 0.3s; }
+.module-header:hover { background: rgba(0, 242, 255, 0.1); }
+.module-item.locked .module-header { cursor: not-allowed; color: var(--text-muted); }
+.lesson-list { list-style: none; padding-left: 1rem; margin-top: 0.5rem; max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
+.lesson-list.show { max-height: 500px; }
+.lesson-list li { padding: 0.7rem; display: flex; align-items: center; cursor: pointer; border-radius: 5px; transition: background 0.3s, color 0.3s; }
+.lesson-list li i { margin-right: 0.7rem; font-size: 1.2rem; }
+.lesson-list li:hover { background: rgba(0, 242, 255, 0.1); color: #fff; }
+.lesson-list li.active { color: var(--accent-color); font-weight: bold; }
+.lesson-list li .bx-check-circle { color: #28a745; }
+.lesson-list li .bx-lock { color: var(--text-muted); }
+.course-content { flex-grow: 1; }
+.lesson-title { font-family: var(--header-font); font-size: 2.5rem; margin-bottom: 2rem; color: #fff; }
+.video-player-container { margin-bottom: 2rem; position: relative; padding: 0; }
+.video-glow-border { position: absolute; top: -4px; left: -4px; right: -4px; bottom: -4px; border: 4px solid var(--accent-color); border-radius: 20px; filter: blur(15px); opacity: 0; transition: opacity 0.4s; pointer-events: none; }
+.video-player-container:hover .video-glow-border { opacity: 0.6; }
+.lesson-description, .task-container { margin-bottom: 2rem; }
+.task-container h3, .lesson-description h3 { font-family: var(--header-font); margin-bottom: 1rem; }
+.code-editor { background: #0c0b20; border: 1px solid var(--secondary-color); padding: 1.5rem; border-radius: 8px; font-family: 'Courier New', Courier, monospace; min-height: 100px; }
+.game-page { display: flex; align-items: center; justify-content: center; min-height: 90vh; padding: 2rem; }
+.game-container { max-width: 700px; width: 100%; text-align: center; }
+.game-instructions { color: var(--text-muted); margin-bottom: 2rem; }
+.game-hud { display: flex; justify-content: space-around; font-size: 1.5rem; font-family: var(--header-font); margin-bottom: 2rem; }
+.word-display-box { font-size: 3rem; font-weight: bold; font-family: var(--header-font); color: var(--accent-color); padding: 2rem; background: rgba(0,0,0,0.2); border-radius: var(--border-radius); margin-bottom: 2rem; letter-spacing: 3px; text-shadow: 0 0 15px var(--glow-color); }
+.game-input { width: 100%; text-align: center; background: transparent; border: 2px solid var(--secondary-color); padding: 1rem; border-radius: 10px; color: #fff; font-size: 1.5rem; transition: border-color 0.3s, box-shadow 0.3s; }
+.game-input:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 20px rgba(0, 242, 255, 0.4); }
+.game-input:disabled { background-color: rgba(0,0,0,0.2); cursor: not-allowed; }
+#game-over-screen { margin-top: 2rem; }
+#game-over-screen h3 { font-family: var(--header-font); font-size: 2rem; }
+.certificate-page { display: flex; flex-direction: column; align-items: center; padding: 4rem 2rem; }
+.certificate-container { width: 800px; max-width: 100%; height: 565px; background: var(--secondary-color); padding: 20px; border-radius: 10px; position: relative; box-shadow: 0 0 40px rgba(0, 242, 255, 0.2); margin-bottom: 2rem; }
+.certificate-border { width: 100%; height: 100%; border: 3px solid var(--accent-color); background: repeating-linear-gradient( 45deg, rgba(0,0,0,0.05), rgba(0,0,0,0.05) 10px, rgba(0, 242, 255, 0.05) 10px, rgba(0, 242, 255, 0.05) 20px ); display: flex; flex-direction: column; align-items: center; padding: 2rem; text-align: center; color: #fff; }
+.certificate-header h1 { font-family: var(--header-font); font-size: 2.5rem; }
+.certificate-body { margin: auto; }
+.award-text { font-size: 1.2rem; color: var(--text-muted); }
+.user-name { font-family: 'Brush Script MT', 'cursive'; font-size: 3.5rem; color: var(--accent-color); margin: 1rem 0; }
+.course-text { font-size: 1.1rem; max-width: 500px; }
+.certificate-footer { display: flex; justify-content: space-between; width: 100%; }
+.signature, .date { border-top: 2px solid var(--accent-color); padding-top: 10px; width: 250px; }
+@media (max-width: 992px) {
+    .main-nav { flex-direction: column; gap: 1rem; }
+    .course-page-layout { flex-direction: column; }
+    .course-sidebar { width: 100%; position: static; margin-bottom: 2rem; }
+}
+@media (max-width: 768px) {
+    .header-content { margin: auto 0; }
+    .main-nav ul { flex-wrap: wrap; justify-content: center; gap: 0.5rem 1rem; }
+    .nav-btn { margin-left: 0; }
+}
+@media print {
+    body, .certificate-page { background: #fff; color: #000; }
+    .certificate-container { box-shadow: none; }
+    .certificate-border { border-color: #000; background: none; }
+    .user-name, .logo span { color: #000; }
+    .main-nav, .loader-wrapper, .certificate-page .btn { display: none; }
+}

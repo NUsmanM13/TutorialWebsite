@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Kurs: {{ course.title }} - Galactic Tutorials{% endblock title %}
+
+{% block main_class %}course-page-layout{% endblock main_class %}
+
+{% block content %}
+<!-- CHAP QISM: KURS DASTURI -->
+<aside class="course-sidebar glass-container">
+    <h3>Kurs Dasturi</h3>
+    <ul class="course-modules">
+        
+        {% for module in course.modules.all %}
+        <li class="module-item">
+            <div class="module-header">
+                <span>Modul {{ module.order }}: {{ module.title }}</span>
+                <i class='bx {% if active_lesson.module == module %}bx-chevron-up{% else %}bx-chevron-down{% endif %}'></i>
+            </div>
+            <ul class="lesson-list {% if active_lesson.module == module %}show{% endif %}">
+                {% for lesson in module.lessons.all %}
+                <li class="{% if lesson.id == active_lesson.id %}active{% endif %}">
+                    <a href="{% url 'courses:lesson_detail' course.id lesson.id %}" style="color: inherit; text-decoration: none; display: flex; align-items: center; width: 100%;">
+                        
+                        {# Endi 'completed_lesson_ids' to'g'ridan-to'g'ri view'dan keladi #}
+                        {% if lesson.id in completed_lesson_ids %}
+                            <i class='bx bx-check-circle' style="color: var(--accent-color);"></i>
+                        {% elif lesson.id == active_lesson.id %}
+                            <i class='bx bx-play-circle'></i>
+                        {% else %}
+                            <i class='bx bxs-file-blank'></i>
+                        {% endif %}
+                        
+                        {{ lesson.order }}. {{ lesson.title }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+        
+    </ul>
+</aside>
+
+<!-- O'NG QISM: DARS MAZMUNI -->
+<section class="course-content">
+    <h1 class="lesson-title">{{ active_lesson.title }}</h1>
+    
+    <div class="lesson-description glass-container">
+        <!-- Dars kontenti CKEditor'dan keladi va xavfsiz HTML sifatida chiqariladi -->
+        {{ active_lesson.content|safe }}
+    </div>
+    
+    {% if active_lesson.exercise %}
+    <div class="task-container glass-container">
+        <h3><i class='bx bxs-terminal'></i> Amaliy Topshiriq: Bo'shliqni to'ldiring</h3>
+        <p>{{ active_lesson.exercise.question_text|safe }}</p>
+        
+        <!-- data-exercise-id orqali ID'ni saqlaymiz -->
+        <form id="exercise-form" data-exercise-id="{{ active_lesson.exercise.id }}">
+            <input type="text" id="exercise-answer" class="game-input" style="font-size: 1rem; text-align: left; padding: 0.8rem;" placeholder="Javobingizni yozing...">
+            <button type="submit" class="btn" style="margin-top: 1rem;">Tekshirish</button>
+        </form>
+        
+        <!-- Natija uchun bo'sh konteyner -->
+        <div id="exercise-result" style="margin-top: 1rem; font-weight: bold;"></div>
+    </div>
+    {% endif %}
+
+    {% if active_lesson.materials.all %}
+    <div class="glass-container" style="margin-top: 2rem;">
+        <h3><i class='bx bxs-download'></i> Dars materiallari</h3>
+        <ul style="list-style: none; margin-top: 1rem;">
+            {% for material in active_lesson.materials.all %}
+            <li style="margin-bottom: 0.5rem;">
+                <a href="{{ material.file.url }}" download style="color: var(--accent-color); text-decoration: none;">
+                    <i class='bx bx-file'></i> {{ material.title }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <!-- DARSNI YAKUNLASH TUGMASI -->
+    <div class="glass-container" style="margin-top: 2rem; text-align: center;">
+        {% if not lesson_progress.is_completed %}
+            <form action="{% url 'courses:complete_lesson' active_lesson.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn">Darsni Yakunlash va Keyingisiga O'tish</button>
+            </form>
+        {% else %}
+            <p style="color: var(--accent-color); font-size: 1.1rem; font-weight: bold;">
+                <i class='bx bx-check-circle'></i> Bu darsni muvaffaqiyatli yakunlagansiz!
+            </p>
+        {% endif %}
+    </div>
+
+</section>
+{% endblock content %}
+
+
+{% block extra_js %}
+<script>
+    // Mavjud modul ochish/yopish skripti
+    document.addEventListener('DOMContentLoaded', () => {
+    //     document.querySelectorAll('.module-header').forEach(header => {
+    //         // ... bu qism o'zgarishsiz qoladi ...
+    //     });
+
+        // YANGI QO'SHILGAN: Amaliy topshiriqni tekshirish logikasi
+        const exerciseForm = document.getElementById('exercise-form');
+        if (exerciseForm) {
+            exerciseForm.addEventListener('submit', (e) => {
+                e.preventDefault(); // Sahifani yangilashni to'xtatish
+
+                const exerciseId = exerciseForm.dataset.exerciseId;
+                const answerInput = document.getElementById('exercise-answer');
+                const resultDiv = document.getElementById('exercise-result');
+                const checkUrl = `/courses/exercise/check/${exerciseId}/`;
+                
+                // Django CSRF tokenini olish
+                const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+                fetch(checkUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    },
+                    body: JSON.stringify({
+                        'answer': answerInput.value
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    resultDiv.textContent = data.message;
+                    if (data.correct) {
+                        resultDiv.style.color = 'var(--accent-color)'; // To'g'ri javob uchun
+                        answerInput.style.borderColor = 'var(--accent-color)';
+                        answerInput.disabled = true; // To'g'ri topgach, inputni yopish
+                    } else {
+                        resultDiv.style.color = '#ff5555'; // Xato javob uchun
+                    }
+                })
+                .catch(error => {
+                    console.error('Xatolik:', error);
+                    resultDiv.textContent = 'Server bilan bogʻlanishda xatolik yuz berdi.';
+                    resultDiv.style.color = '#ff5555';
+                });
+            });
+        }
+    });
+</script>
+{% endblock extra_js %}

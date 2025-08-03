@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Boshqaruv Paneli - Galactic Tutorials{% endblock title %}
+
+{% block content %}
+<main style="padding: 4rem 2rem;">
+    <h1 style="text-align: center; font-family: var(--header-font); color: #fff; margin-bottom: 4rem;">
+        Xush kelibsiz, {{ user.get_full_name|default:user.username }}!
+    </h1>
+    
+    <section>
+        <h2 class="section-title"><span>//</span> Mening Kurslarim</h2>
+        <div class="cards-container">
+            
+            {% for enrollment in user.enrollments.all %}
+            <div class="card">
+                <h3>{{ enrollment.course.title }}</h3>
+                <p>O'zlashtirish darajasi:</p>
+                <div class="progress-bar-container">
+                     <div class="progress-bar" style="width: {{ enrollment.progress }}%;">{{ enrollment.progress|floatformat:0 }}%</div>
+                </div><br>
+                {% if enrollment.is_completed %}
+                    <a href="{% url 'courses:view_certificate' enrollment.course.id %}" class="btn">Sertifikatni ko'rish</a>
+                {% else %}
+                    <a href="{% url 'courses:detail' enrollment.course.id %}" class="btn">Davom ettirish</a>
+                {% endif %}
+            </div>
+            {% empty %}
+                <p style="grid-column: 1 / -1; text-align: center; font-size: 1.2rem; color: var(--text-muted);">
+                    Siz hali hech qanday kursga yozilmagansiz. <a href="{% url 'courses:list' %}" style="color: var(--accent-color);">Darsliklarni ko'rish</a>
+                </p>
+            {% endfor %}
+
+        </div>
+    </section>
+
+    <section style="padding: 6rem 0;">
+    <h2 class="section-title"><span>//</span> Mening Yutuqlarim</h2>
+    <div class="achievements-container">
+        
+        {% for achievement in all_achievements %}
+            {# Foydalanuvchi bu kursni tamomlaganmi? #}
+            {% if achievement.id in completed_courses_ids %}
+                {# Ha, tamomlagan. Yutuq "ochiq" #}
+                <div class="achievement-badge" title="{{ achievement.title }}">
+                    <i class='bx {{ achievement.icon_class }}'></i>
+                </div>
+            {% else %}
+                {# Yo'q, hali tamomlamagan. Yutuq "qulfda" #}
+                <div class="achievement-badge locked" title="{{ achievement.title }} (Qulfda)">
+                    <i class='bx {{ achievement.icon_class }}'></i>
+                </div>
+            {% endif %}
+        {% empty %}
+             <p style="text-align: center; font-size: 1.2rem; color: var(--text-muted);">
+                Platformada hali yutuqlar yaratilmagan.
+            </p>
+        {% endfor %}
+
+    </div>
+</section>
+</main>
+{% endblock content %}

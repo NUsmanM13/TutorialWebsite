@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Kirish - Galactic Tutorials{% endblock title %}
+
+{% block body_class %}login-page{% endblock body_class %}
+
+{% block content %}
+<div class="login-container glass-container">
+    <h2>Tizimga Kirish</h2>
+    
+    <!-- Xatolik xabarlarini chiqarish uchun joy -->
+    {% if form.errors %}
+        <p style="color: #ff5555; margin-bottom: 1rem;">Login yoki parol xato.</p>
+    {% endif %}
+
+    <form method="post" action="{% url 'main:login' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_username">Login (username)</label>
+            <input type="text" name="username" id="id_username" required>
+        </div>
+        <div class="form-group">
+            <label for="id_password">Parol</label>
+            <input type="password" name="password" id="id_password" required>
+        </div>
+        <button type="submit" class="btn" style="width: 100%;">Kirish</button>
+    </form>
+    <p class="toggle-form">Hisobingiz yo'qmi? <a href="{% url 'main:register' %}">Ro'yxatdan o'tish</a></p>
+</div>
+{% endblock content %}

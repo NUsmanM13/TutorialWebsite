@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}O'yinlar - Galactic Tutorials{% endblock title %}
+
+{% block main_class %}game-page{% endblock main_class %}
+
+{% block content %}
+<div class="game-container glass-container">
+    <h2 class="section-title" style="margin-bottom: 1rem;"><span>//</span> Koinot Terimchisi</h2>
+    <p class="game-instructions">Ekranda paydo bo'lgan so'zlarni imkon qadar tezroq tering!</p>
+    
+    <div class="game-hud">
+        <div>Vaqt: <span id="time-left">60</span>s</div>
+        <div>Hisob: <span id="score">0</span></div>
+    </div>
+    <div id="word-display" class="word-display-box">Boshlashga tayyormisiz?</div>
+    <input type="text" id="word-input" class="game-input" placeholder="So'zni shu yerga yozing..." autocomplete="off" disabled>
+    <button id="start-game-btn" class="btn" style="margin-top: 1.5rem;">Boshlash</button>
+    <div id="game-over-screen" class="hidden">
+        <h3>O'yin Tugadi!</h3>
+        <p>Sizning yakuniy hisobingiz: <span id="final-score"></span></p>
+        <button id="restart-game-btn" class="btn">Qayta O'ynash</button>
+    </div>
+</div>
+{% endblock content %}
+
+{% block extra_js %}
+<script src="{% static 'js/game.js' %}"></script>
+{% endblock extra_js %}

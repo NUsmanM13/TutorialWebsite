@@ -1,0 +1,59 @@
+# Django loyihasi uchun .gitignore
+
+### Atrof-muhit ###
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+db.sqlite3
+media/
+static/
+
+### Python ###
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+pip-log.txt
+pip-delete-this-directory.txt
+
+### Muharrir va IDE sozlamalari ###
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+### Testlash ###
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.pytest_cache/
+
+### Boshqalar ###
+.DS_Store
+Thumbs.db

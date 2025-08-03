@@ -1,0 +1,23 @@
+<!-- templates/my_certificates.html -->
+{% extends 'base.html' %}
+
+{% block title %}Mening sertifikatlarim{% endblock %}
+
+{% block content %}
+<main style="padding: 4rem 2rem;">
+    <h1 class="section-title"><span>//</span> Mening Sertifikatlarim</h1>
+    <div class="cards-container">
+        {% for cert in certificates %}
+        <div class="card">
+            <h3>{{ cert.enrollment.course.title }}</h3>
+            <p>Berilgan sana: {{ cert.issued_at|date:"d.m.Y" }}</p>
+            <a href="{% url 'courses:view_certificate' cert.enrollment.course.id %}" class="btn">Ko'rish</a>
+        </div>
+        {% empty %}
+        <p style="grid-column: 1 / -1; text-align: center; font-size: 1.2rem; color: var(--text-muted);">
+            Sizda hali hech qanday sertifikat mavjud emas.
+        </p>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}

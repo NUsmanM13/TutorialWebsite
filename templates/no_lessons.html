@@ -1,0 +1,16 @@
+<!-- templates/no_lessons.html -->
+{% extends 'base.html' %}
+
+{% block title %}Darslar topilmadi{% endblock %}
+
+{% block content %}
+<main style="padding: 4rem 2rem; text-align: center;">
+    <div class="glass-container" style="max-width: 800px; margin: auto;">
+        <h1 class="lesson-title">{{ course.title }}</h1>
+        <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 2rem;">
+            Afsuski, bu kursga hali darslar qo'shilmagan. Tez orada biz bu bo'shliqni to'ldiramiz!
+        </p>
+        <a href="{% url 'users:dashboard' %}" class="btn">Boshqaruv Paneliga Qaytish</a>
+    </div>
+</main>
+{% endblock %}

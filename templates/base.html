@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Har bir sahifa uchun dinamik sarlavha -->
+    <title>{% block title %}Galactic Tutorials{% endblock title %}</title>
+    
+    <!-- Statik fayllarni Django orqali ulash -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+    <div class="loader-wrapper"><div class="loader"></div></div>
+
+    <header class="{% block header_class %}{% endblock %}">
+        {% if not request.path == '/login/' and not request.path == '/register/' %}
+        <div class="star-field">
+            <div class="layer"></div><div class="layer"></div><div class="layer"></div>
+        </div>
+        {% endif %}
+        
+        <nav class="main-nav">
+            <a href="{% url 'main:home' %}" class="logo">Galactic<span>Tutor</span></a>
+            <ul>
+                <!-- Navigatsiyani dinamik o'zgartirish -->
+                {% if user.is_authenticated %}
+                    <!-- Foydalanuvchi tizimga kirgan bo'lsa -->
+                    <li><a href="{% url 'main:home' %}">Bosh Sahifa</a></li>
+                    <li><a href="{% url 'users:dashboard' %}">Panelim</a></li>
+                    <li><a href="{% url 'courses:list' %}">Darsliklar</a></li>
+                    <li><a href="{% url 'users:my_certificates' %}">Sertifikatlarim</a></li>
+                    <li><a href="{% url 'main:logout' %}" class="btn nav-btn">Chiqish</a></li>
+                {% else %}
+                    <!-- Mehmonlar uchun -->
+                    <li><a href="{% url 'main:home' %}">Bosh Sahifa</a></li>
+                    <li><a href="#">Darsliklar</a></li>
+                    <li><a href="{% url 'main:games' %}">O'yinlar</a></li>
+                    <li><a href="{% url 'main:login' %}" class="btn nav-btn">Kirish</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        {% block header_content %}{% endblock header_content %}
+    </header>
+
+    <main class="{% block main_class %}{% endblock %}">
+        <!-- Har bir sahifaning o'ziga xos kontenti shu yerga tushadi -->
+        {% block content %}
+        {% endblock content %}
+    </main>
+    
+    <!-- Skriptlar -->
+    <script src="{% static 'js/main.js' %}"></script>
+    <!-- Har bir sahifa uchun qo'shimcha skriptlar -->
+    {% block extra_js %}{% endblock extra_js %}
+</body>
+</html>

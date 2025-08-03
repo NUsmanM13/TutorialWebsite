@@ -1,0 +1,16 @@
+<!-- templates/course_enroll.html -->
+{% extends 'base.html' %}
+
+{% block title %}Kurs: {{ course.title }}{% endblock %}
+
+{% block content %}
+<main style="padding: 4rem 2rem; text-align: center;">
+    <div class="glass-container" style="max-width: 800px; margin: auto;">
+        <h1 class="lesson-title">{{ course.title }}</h1>
+        <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 2rem;">
+            {{ course.description }}
+        </p>
+        <a href="{% url 'courses:enroll' course.id %}" class="btn">Kursga Yozilish</a>
+    </div>
+</main>
+{% endblock %}

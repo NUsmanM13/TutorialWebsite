@@ -1,0 +1,24 @@
+<!-- templates/course_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}Barcha darsliklar{% endblock %}
+
+{% block content %}
+<main style="padding: 4rem 2rem;">
+    <h1 class="section-title"><span>//</span> Barcha Darsliklar</h1>
+    <div class="cards-container">
+        {% for course in courses %}
+        <div class="card">
+            <h3>{{ course.title }}</h3>
+            <p>{{ course.description|truncatewords:20 }}</p>
+            
+            {% if course.id in enrolled_course_ids %}
+                <a href="{% url 'courses:detail' course.id %}" class="btn">Davom ettirish</a>
+            {% else %}
+                <a href="{% url 'courses:detail' course.id %}" class="btn">Batafsil</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}

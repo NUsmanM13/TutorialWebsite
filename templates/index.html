@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Galactic Tutorials - Bosh Sahifa{% endblock title %}
+
+{% block header_class %}home-header{% endblock header_class %}
+
+{% block header_content %}
+<div class="header-content">
+    <h1>Kelajak Texnologiyalarini O'rganing</h1>
+    <p>Interaktiv darsliklarimiz va qiziqarli o'yinlarimiz orqali dasturlash olamiga sho'ng'ing va o'z potentsialingizni oching.</p>
+    <a href="{% url 'courses:list' %}" class="btn">Kurslarni Boshlash</a>
+</div>
+{% endblock header_content %}
+
+
+{% block content %}
+<section style="padding: 6rem 0;">
+    <h2 class="section-title"><span>//</span> Mashhur Darsliklar</h2>
+    <div class="cards-container">
+        
+        <!-- ==================================== -->
+        <!-- DINAMIK QISM BOSHLANISHI -->
+        <!-- ==================================== -->
+        {% for course in courses %}
+        <div class="card">
+            {# Ma'lumotlar bazasidan kursning ikonasi olinadi. Agar yo'q bo'lsa, standart ikona qo'yiladi. #}
+            <div class="icon-wrapper"><i class='bx {{ course.icon_class|default:"bxs-book-open" }}'></i></div>
+            
+            {# Ma'lumotlar bazasidan kursning sarlavhasi olinadi. #}
+            <h3>{{ course.title }}</h3>
+            
+            {# Ma'lumotlar bazasidan kursning tavsifi olinadi va 15 ta so'z bilan cheklanadi. #}
+            <p>{{ course.description|truncatewords:15 }}</p>
+            
+            {# Tugma uchun to'g'ri URL manzil generatsiya qilinadi. #}
+            <a href="{% url 'courses:detail' course.id %}" class="btn">Batafsil</a>
+        </div>
+        {% empty %}
+            {# Agar 'view'dan hech qanday kurs kelmasa, ushbu xabar ko'rsatiladi. #}
+            <p style="grid-column: 1 / -1; text-align: center; font-size: 1.2rem; color: var(--text-muted);">
+                Hozircha mashhur kurslar mavjud emas.
+            </p>
+        {% endfor %}
+        <!-- ==================================== -->
+        <!-- DINAMIK QISM TUGASHI -->
+        <!-- ==================================== -->
+
+    </div>
+</section>
+
+<section style="padding: 6rem 0; background-color: var(--secondary-color);">
+    <h2 class="section-title"><span>//</span> Interaktiv O'yinlar</h2>
+    <div class="cards-container">
+        <div class="card">
+            <div class="icon-wrapper"><i class='bx bx-keyboard'></i></div>
+            <h3>Koinot Terimchisi</h3>
+            <p>Tez yozish qobiliyatingizni sinovdan o'tkazing va koinotni zabt eting!</p>
+            <a href="{% url 'main:games' %}" class="btn">O'ynash</a>
+        </div>
+    </div>
+</section>
+{% endblock content %}
