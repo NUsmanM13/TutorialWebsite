@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-7wqn5yuio-#6$qbzgnp7$+n45-vx+f9-3_w(*n0m2^44dl*a=^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['www.galactic9820.pythonanywhere.com', 'www.galactic.nzbkv.uz']
 
 
 # Application definition
@@ -129,8 +129,9 @@ USE_TZ = True
 # config/settings.py faylining oxiriga qo'shing
 
 # Statik fayllar uchun sozlamalar
+import os
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles' # production uchun
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # production uchun
 STATICFILES_DIRS = [
     BASE_DIR / 'static', # <-- SHU QATORNI QO'SHING
 ]
